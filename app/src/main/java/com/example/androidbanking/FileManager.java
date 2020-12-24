@@ -43,7 +43,7 @@ public class FileManager {
             br.close();
             return text.toString();
         } catch (Exception e){
-            e.printStackTrace();
+
             return "";
         }
 

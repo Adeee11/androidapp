@@ -1,15 +1,89 @@
 package com.example.androidbanking;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 
 public class Signuppage extends AppCompatActivity {
+
+    EditText name,phone;
+    Button signUpBtn, backBtn;
+    RadioButton savings, current;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signuppage);
+        name = findViewById(R.id.name);
+        phone = findViewById(R.id.contact);
+        savings = findViewById(R.id.savingsradio);
+        current = findViewById(R.id.currentradio);
+        signUpBtn = findViewById(R.id.signupbtn);
+        backBtn = findViewById(R.id.backtologin);
+
+
+        savings.setChecked(true);
+        savings.setOnClickListener((View v) -> {
+            savings.setChecked(true);
+            current.setChecked(false);
+        });
+        current.setOnClickListener((View v) -> {
+            savings.setChecked(false);
+            current.setChecked(true);
+        });
+        signUpBtn.setOnClickListener((View v)-> {
+
+            String custName = name.getText().toString();
+            if(custName.length() < 2){
+                 Helpers.showToast(getApplicationContext(),"Please Enter A Valid Customer Name");
+                 return;
+            }
+            String text = phone.getText().toString();
+            if(text.length() < 10){
+                Helpers.showToast(getApplicationContext(),"Please Enter A Valid 10 digit Phone Number");
+                return;
+            }
+            long phoneNum = Long.parseLong(text);
+
+            String type = savings.isChecked()? "Savings": "Current";
+            User user =  User.signUp(getApplicationContext(),custName,phoneNum,type);
+            new AlertDialog.Builder(this)
+                    .setTitle("Account Details")
+                    .setMessage("Your Account Has been created Successfully. Your Access Number is "+
+                            user.uid + " and Pin is "+ user.password +". Please Write Them Somewhere")
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                            finish();
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Continue with delete operation
+                            finish();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_secure).create()
+                    .show();
+        });
+        backBtn.setOnClickListener((View v)-> {
+            finish();
+        });
+
+
     }
 
 }
