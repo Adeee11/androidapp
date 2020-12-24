@@ -11,4 +11,6 @@ public class TransferMoney extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_money);
     }
+
+
 }
