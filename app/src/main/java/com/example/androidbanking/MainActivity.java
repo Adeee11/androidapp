@@ -64,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
         if(!checkWriteExternalPermission()){
             requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         }
-        // get users from storage
+        // get or set users from storage to memory
         fillUsers();
+
+        // binding variables to screen elements
         signInBtn = findViewById(R.id.signinBtn);
         accessInput = findViewById(R.id.accesscard);
         pin = findViewById(R.id.pin);

@@ -32,6 +32,7 @@ public class DeleteAccount extends AppCompatActivity {
                 deleteAccSpinner.setAdapter(new ArrayAdapter(this,android.R.layout.simple_spinner_item,User.findUserAccountNumbers()));
 
             }catch (Exception e){
+                // handle Exception
                 Helpers.showToast(getApplicationContext(), "Something Went Wrong. Contact Support");
             }
         });

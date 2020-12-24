@@ -23,6 +23,7 @@ public class Signuppage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signuppage);
+        // binding variables to screen elements
         name = findViewById(R.id.name);
         phone = findViewById(R.id.contact);
         savings = findViewById(R.id.savingsradio);
@@ -30,32 +31,37 @@ public class Signuppage extends AppCompatActivity {
         signUpBtn = findViewById(R.id.signupbtn);
         backBtn = findViewById(R.id.backtologin);
 
-
+        // initialzed saving radio as checked
         savings.setChecked(true);
+        // handle radio click
         savings.setOnClickListener((View v) -> {
             savings.setChecked(true);
             current.setChecked(false);
         });
+        // handle radio click
         current.setOnClickListener((View v) -> {
             savings.setChecked(false);
             current.setChecked(true);
         });
         signUpBtn.setOnClickListener((View v)-> {
-
+            // get custname
             String custName = name.getText().toString();
             if(custName.length() < 2){
                  Helpers.showToast(getApplicationContext(),"Please Enter A Valid Customer Name");
                  return;
             }
+            // get phone num
             String text = phone.getText().toString();
             if(text.length() < 10){
                 Helpers.showToast(getApplicationContext(),"Please Enter A Valid 10 digit Phone Number");
                 return;
             }
             long phoneNum = Long.parseLong(text);
-
+            // get account type
             String type = savings.isChecked()? "Savings": "Current";
+            // handle signup
             User user =  User.signUp(getApplicationContext(),custName,phoneNum,type);
+            // show account details in a dialog
             new AlertDialog.Builder(this)
                     .setTitle("Account Details")
                     .setMessage("Your Account Has been created Successfully. Your Access Number is "+
@@ -79,6 +85,8 @@ public class Signuppage extends AppCompatActivity {
                     .setIcon(android.R.drawable.ic_secure).create()
                     .show();
         });
+
+        // handle back button click
         backBtn.setOnClickListener((View v)-> {
             finish();
         });

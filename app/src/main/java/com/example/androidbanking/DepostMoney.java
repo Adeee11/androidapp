@@ -40,6 +40,7 @@ public class DepostMoney extends AppCompatActivity {
                 String msg = Account.findAccount(accNum).depositMoney(getApplicationContext(),amt);
                 Helpers.showToast(getApplicationContext(), msg);
             }catch (Exception e){
+                // handle Exception
                 Helpers.showToast(getApplicationContext(), "Something Went Wrong. Contact Support");
             }
 

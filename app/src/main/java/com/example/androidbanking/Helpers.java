@@ -45,8 +45,7 @@ public class Helpers {
         if(users.equals("")){
             return usersList;
         }
-        Log.d("UserList", users);
-        Log.d("AccountsList", accounts);
+
         String[] allAccounts = accounts.split("\n");
         String[] allUsers = users.split("\n");
         for(int i = 0; i < allUsers.length; i++){
