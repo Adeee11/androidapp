@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -23,24 +26,22 @@ public class MainActivity extends AppCompatActivity {
     public void fillUsers(){
         // check if users are in memory if not then get them from external storage
         if(User.allUsers.size() == 0){
-           ArrayList<User> users =  Helpers.getAllUsers(getApplicationContext());
-           Log.d("Works", "test log");
-           if(users.size() > 0){
-               User.allUsers = users;
-           }else {
-               // create some defaults user for testing application
-               User adarsh = new User(10010010,1312, "Adarsh", 8727880220L);
-               adarsh.accounts.add(new Account(10010010,100010,
-                       100.0,"savings",0.0));
-               User syed = new User(10010011,1000, "Syed", 7727880220L);
-               syed.accounts.add(new Account(10010011,100012,
-                       1000.0,"current",0.0));
-               User.allUsers.add(adarsh);
-               User.allUsers.add(syed);
-               Helpers.saveAllUsers(getApplicationContext(),User.allUsers);
-           }
+            try {
+                ArrayList<User> users =  Helpers.getAllUsers(getApplicationContext());
+                if(users.size() > 0){
+                    User.allUsers = users;
+                }else {
+                    // create some defaults user for testing application
+                    Helpers.restore(getApplicationContext());
+                }
+            }catch (Exception e){
+                Helpers.restore(getApplicationContext());
+            }
+
         }
         Log.d("User", User.allUsers.get(0).name);
+
+        Log.d("Email", "email Sent");
     }
 
     /**
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Sign In Successfull", Toast.LENGTH_SHORT).show();
                     Intent allOptionIntent = new Intent(getApplicationContext(), AllAccountOptions.class);
                     startActivity(allOptionIntent);
+                    pin.setText("");
+                    accessInput.setText("");
                 }else {
                     // show toast login failed
                     Toast.makeText(getApplicationContext(), "Invalid Access Number or Pin", Toast.LENGTH_SHORT).show();

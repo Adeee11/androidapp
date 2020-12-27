@@ -14,7 +14,7 @@ import android.widget.RadioButton;
 
 public class Signuppage extends AppCompatActivity {
 
-    EditText name,phone;
+    EditText name,phone, email;
     Button signUpBtn, backBtn;
     RadioButton savings, current;
 
@@ -30,7 +30,7 @@ public class Signuppage extends AppCompatActivity {
         current = findViewById(R.id.currentradio);
         signUpBtn = findViewById(R.id.signupbtn);
         backBtn = findViewById(R.id.backtologin);
-
+        email = findViewById(R.id.email);
         // initialzed saving radio as checked
         savings.setChecked(true);
         // handle radio click
@@ -50,6 +50,18 @@ public class Signuppage extends AppCompatActivity {
                  Helpers.showToast(getApplicationContext(),"Please Enter A Valid Customer Name");
                  return;
             }
+            // get email from input
+            String emailText = email.getText().toString().trim();
+            String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+            // validate email
+            if(!emailText.matches(emailPattern)){
+                Helpers.showToast(getApplicationContext(),"Please Enter A Valid a Valid Email");
+                return;
+            }
+            if(User.findUserByEmail(emailText) != null){
+                Helpers.showToast(getApplicationContext(),"A User Already exists With that email");
+                return;
+            }
             // get phone num
             String text = phone.getText().toString();
             if(text.length() < 10){
@@ -60,7 +72,7 @@ public class Signuppage extends AppCompatActivity {
             // get account type
             String type = savings.isChecked()? "Savings": "Current";
             // handle signup
-            User user =  User.signUp(getApplicationContext(),custName,phoneNum,type);
+            User user =  User.signUp(getApplicationContext(),emailText,custName,phoneNum,type);
             // show account details in a dialog
             new AlertDialog.Builder(this)
                     .setTitle("Account Details")

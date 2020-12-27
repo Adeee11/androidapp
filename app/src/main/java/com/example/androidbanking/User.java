@@ -9,10 +9,22 @@ public class User {
     long uid;
     int password;
     String name;
+    String email;
     long phone;
     static User  currentUser = null;
     ArrayList<Account> accounts = new ArrayList<Account>();
 
+
+    static User findUserByEmail(String email){
+        User username = null;
+        for(User user: User.allUsers){
+            if(user.email.equals(email)){
+                username = user;
+                break;
+            }
+        }
+        return username;
+    }
 
     /**
      *
@@ -125,11 +137,11 @@ public class User {
      * @param type
      * @return
      */
-    static User signUp(Context cont, String name, long contact, String type){
+    static User signUp(Context cont,String email, String name, long contact, String type){
 
 
         long uid = genUid();
-        User  user = new User(uid,genPassword(),name,contact);
+        User  user = new User(uid,genPassword(),email,name,contact);
         user.accounts.add(Account.createNewAccount(user.uid,type));
         User.allUsers.add(user);
         Helpers.saveAllUsers(cont,User.allUsers);
@@ -155,10 +167,11 @@ public class User {
      * @param name
      * @param phone
      */
-    User(long uid, int password, String name, long phone){
+    User(long uid, int password,String email, String name, long phone){
         this.uid = uid;
         this.password = password;
         this.name = name;
         this.phone = phone;
+        this.email = email;
     }
 }

@@ -11,7 +11,7 @@ import android.widget.Spinner;
 
 public class PayUtils extends AppCompatActivity {
     Spinner accSpinner, payUtilSp;
-    EditText amount;
+    EditText amount, subscriberId;
     Button backBtn, payBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class PayUtils extends AppCompatActivity {
         amount = findViewById(R.id.payUtilsAmount);
         payBtn = findViewById(R.id.payButton);
         backBtn = findViewById(R.id.payUtilsBack);
+        subscriberId = findViewById(R.id.editTextNumber);
         // show account numbers in spinner
         accSpinner.setAdapter(new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,User.findUserAccountNumbers()));
@@ -40,11 +41,17 @@ public class PayUtils extends AppCompatActivity {
                 long accNum = Long.parseLong(accSpinner.getSelectedItem().toString());
                 Account acc = Account.findAccount(accNum);
                 String amountText = amount.getText().toString();
+                String subscriberNum = subscriberId.getText().toString();
                 // get amount value
                 if(amountText.equals("")){
                     Helpers.showToast(getApplicationContext(),"Please Enter An Amount");
                     return;
                 }
+                if(subscriberNum.equals("")){
+                    Helpers.showToast(getApplicationContext(),"Please Enter Subscriber Number");
+                    return;
+                }
+
                 Double am = Double.parseDouble(amountText);
                 // handle Payment
                 String msg = acc.payUtils(getApplicationContext(),payUtilSp.getSelectedItem().toString(), am);

@@ -10,9 +10,19 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="77dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="128dp"
         android:text="Amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Subscription No."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -58,12 +68,12 @@
         android:id="@+id/payUtilsAmount"
         android:layout_width="227dp"
         android:layout_height="42dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/payutilsSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <Button
         android:id="@+id/payButton"
@@ -84,5 +94,16 @@
         android:text="Back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="229dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payutilsSpinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
