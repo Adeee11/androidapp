@@ -55,7 +55,9 @@ public class TransferMoney extends AppCompatActivity {
                 String msg = Account.transferMoney(getApplicationContext(),fromAcc,toA,amounta);
                 Account acc1 = Account.findAccount(fromAcc);
                 Account acc2 = Account.findAccount(toA);
-                if(acc1.uid != acc2.uid){
+                Helpers.showToast(getApplicationContext(), msg);
+
+                if(acc1 != null && acc2 != null && acc1.uid != acc2.uid){
                     User user = User.findUser(acc2.uid);
                     User user1 = User.findUser(acc1.uid);
                     SSEmail ss = new SSEmail(user.email,"Money Transferred", "$"+ amounta
@@ -66,9 +68,10 @@ public class TransferMoney extends AppCompatActivity {
                     executor.execute(task1);
 
                 }
-                Helpers.showToast(getApplicationContext(), msg);
+
             }catch (Exception e){
                 // handle exception
+                e.printStackTrace();
                 Helpers.showToast(getApplicationContext(), "Please Try Again Later");
             }
 
