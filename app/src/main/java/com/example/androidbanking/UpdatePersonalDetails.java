@@ -25,6 +25,8 @@ public class UpdatePersonalDetails extends AppCompatActivity {
         name.setText(User.currentUser.name);
         // initialize contact field with current phone of user
         contact.setText(String.valueOf(User.currentUser.phone));
+
+        email.setText(User.currentUser.email);
         // handle back button click
         backBtn.setOnClickListener((View v)-> {
             finish();
