@@ -61,7 +61,7 @@ public class TransferMoney extends AppCompatActivity {
                     User user = User.findUser(acc2.uid);
                     User user1 = User.findUser(acc1.uid);
                     SSEmail ss = new SSEmail(user.email,"Money Transferred", "$"+ amounta
-                            + " was transferred to you account by "+ user1.name);
+                            + " was transferred to your Account: "+toA +" by "+ user1.name);
 
                     FutureTask<String> task1 = new FutureTask<String>(ss);
                     ExecutorService executor = Executors.newFixedThreadPool(1);
