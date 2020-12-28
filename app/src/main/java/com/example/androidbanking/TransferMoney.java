@@ -62,11 +62,14 @@ public class TransferMoney extends AppCompatActivity {
                     User user1 = User.findUser(acc1.uid);
                     SSEmail ss = new SSEmail(user.email,"Money Transferred", "$"+ amounta
                             + " was transferred to your Account: "+toA +" by "+ user1.name);
-
+                    SSEmail ss2 = new SSEmail(user1.email,"Money Was Deducted", "$"+ amounta
+                            + " was tranferred to Account: "+toA +" from your Account " + fromAcc);
                     FutureTask<String> task1 = new FutureTask<String>(ss);
-                    ExecutorService executor = Executors.newFixedThreadPool(1);
+                    FutureTask<String> task2 = new FutureTask<String>(ss2);
+                    ExecutorService executor = Executors.newFixedThreadPool(2);
                     executor.execute(task1);
-
+                    executor.execute(task2);
+                    
                 }
 
             }catch (Exception e){
