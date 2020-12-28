@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class UpdatePersonalDetails extends AppCompatActivity {
-    EditText name, contact;
+    EditText name, contact, email;
     Button backBtn, updateBtn;
 
     @Override
@@ -18,7 +18,7 @@ public class UpdatePersonalDetails extends AppCompatActivity {
         // binding variables to screen elements
         name = findViewById(R.id.updatePName);
         contact = findViewById(R.id.updatePContact);
-
+        email = findViewById(R.id.updatePEmail);
         backBtn = findViewById(R.id.goBackUpdatePer);
         updateBtn = findViewById(R.id.updateDetButton);
         // initialize name field with current name of user
@@ -37,8 +37,9 @@ public class UpdatePersonalDetails extends AppCompatActivity {
                 String nameStr = name.getText().toString();
                 // get phone
                 long phoneNum = Long.parseLong(contact.getText().toString());
+
                 // handle Update
-                String msg = User.currentUser.updateDetails(getApplicationContext(), nameStr, phoneNum);
+                String msg = User.currentUser.updateDetails(getApplicationContext(), nameStr, email.getText().toString(),phoneNum);
                 Helpers.showToast(getApplicationContext(), msg);
             }catch (Exception e){
                 // handle exception

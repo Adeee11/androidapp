@@ -71,11 +71,22 @@ public class User {
      * @param phone
      * @return
      */
-    public String updateDetails(Context cont, String name, long phone){
+    public String updateDetails(Context cont, String name,String email, long phone){
 
         if(String.valueOf(phone).length() != 10){
             return "Please Enter a 10 digit Phone Number";
         }
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        // validate email
+        if(!email.matches(emailPattern)){
+            return "Please enter a Valid Email";
+        }
+        User user = findUserByEmail(email);
+        if(user != null){
+            return "User already exits with email: "+ email;
+        }
+        this.email = email;
         this.name = name;
         this.phone = phone;
         Helpers.saveAllUsers(cont,User.allUsers);
